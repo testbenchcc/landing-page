@@ -21,6 +21,8 @@ cat <<EOF > "$OUTPUT_FILE"
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Prevent caching so auto-refresh fetches a fresh copy -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>$PAGE_TITLE</title>
   <style>
@@ -245,9 +247,9 @@ cat <<EOF >> "$OUTPUT_FILE"
 
       document.getElementById('time-since').textContent = elapsedStr;
 
-      // Refresh the page if the elapsed time meets or exceeds the update time (in seconds)
+      // When auto-refresh is triggered, force a full reload bypassing cache
       if (diff >= updateTimeMin * 60) {
-          location.reload();
+          window.location.href = window.location.pathname + '?_=' + new Date().getTime();
       }
     }
 
@@ -319,4 +321,4 @@ cat <<EOF >> "$OUTPUT_FILE"
 </html>
 EOF
 
-echo "🎉 HTML file generated with update timestamp: $OUTPUT_TIME"
+echo "🎉 HTML file generated with update timestamp: $CURRENT_TIME_READABLE"

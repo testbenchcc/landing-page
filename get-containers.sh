@@ -248,7 +248,7 @@ cat <<EOF >> "$OUTPUT_FILE"
       document.getElementById('time-since').textContent = elapsedStr;
 
       // When auto-refresh is triggered, force a full reload bypassing cache
-      if (diff >= updateTimeMin * 60) {
+      if (diff >= (updateTimeMin * 60)+1) {
           window.location.href = window.location.pathname + '?_=' + new Date().getTime();
       }
     }
